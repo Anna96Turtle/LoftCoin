@@ -33,7 +33,9 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
     private LayoutInflater inflater;
 
     @Override
-    public int getItemCount() { return IMAGE.length; }
+    public int getItemCount() { return
+            IMAGE.length;
+    }
 
     @NonNull
     @Override
@@ -53,11 +55,6 @@ public class WelcomeAdapter extends RecyclerView.Adapter<WelcomeAdapter.ViewHold
         super.onAttachedToRecyclerView(recyclerView);
         inflater = LayoutInflater.from(recyclerView.getContext());
     }
-
-//    @Override
-//    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
-//        super.onDetachedFromRecyclerView(recyclerView);
-//    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 

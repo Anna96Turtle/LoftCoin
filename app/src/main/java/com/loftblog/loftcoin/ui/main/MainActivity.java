@@ -1,17 +1,35 @@
 package com.loftblog.loftcoin.ui.main;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentFactory;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.loftblog.loftcoin.BaseComponent;
+import com.loftblog.loftcoin.LoftApp;
 import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.databinding.ActivityMainBinding;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
+
+    private MainComponent component;
+
+    @Inject FragmentFactory fragmentFactory;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        final BaseComponent baseComponent = ((LoftApp) newBase.getApplicationContext()).getComponent();
+        component = DaggerMainComponent.builder().baseComponent(baseComponent).build();
+        component.inject(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

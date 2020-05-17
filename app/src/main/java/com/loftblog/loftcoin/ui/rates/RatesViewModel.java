@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.loftblog.loftcoin.data.Coin;
 import com.loftblog.loftcoin.data.CoinsRepo;
+import com.loftblog.loftcoin.data.CurrencyRepo;
+import com.loftblog.loftcoin.data.SortBy;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
@@ -17,22 +20,30 @@ public class RatesViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isRefreshing = new MutableLiveData<>();
 
-    private final MutableLiveData<Boolean> forceRefresh = new MutableLiveData<>(true);
+    private final MutableLiveData<AtomicBoolean> forceRefresh = new MutableLiveData<>(new AtomicBoolean(true));
+
+    private final MutableLiveData<SortBy> sortBy = new MutableLiveData<>(SortBy.RANK);
 
     private final LiveData<List<Coin>> coins;
 
-    @Inject
-    public RatesViewModel(CoinsRepo coinsRepo) {
+    private int sortingIndex = 1;
 
-        final LiveData<CoinsRepo.Query> query = Transformations
-                .map(forceRefresh, (r) -> {
-                    isRefreshing.postValue(true);
-                    return CoinsRepo.Query
-                            .builder()
-                            .forceUpdate(r)
-                            .currency("USD")
+    @Inject
+    public RatesViewModel(CoinsRepo coinsRepo, CurrencyRepo currencyRepo) {
+
+        final LiveData<CoinsRepo.Query> query = Transformations.switchMap(forceRefresh, (r) -> {
+            return Transformations.switchMap(currencyRepo.currency(), (c) -> {
+                r.set(true);
+                isRefreshing.postValue(true);
+                return Transformations.map(sortBy, (s) -> {
+                    return CoinsRepo.Query.builder()
+                            .currency(c.code())
+                            .forceUpdate(r.getAndSet(false))
+                            .sortBy(s)
                             .build();
                 });
+            });
+        });
         final LiveData<List<Coin>> coins = Transformations.switchMap(query, coinsRepo::listings);
         this.coins = Transformations.map(coins, (c) -> {
             isRefreshing.postValue(false);
@@ -51,7 +62,11 @@ public class RatesViewModel extends ViewModel {
     }
 
     final void refresh() {
-        forceRefresh.postValue(true);
+        forceRefresh.postValue(new AtomicBoolean(true));
+    }
+
+    void switchSortingOrder() {
+        sortBy.postValue(SortBy.values()[sortingIndex++ % SortBy.values().length]);
     }
 
 }

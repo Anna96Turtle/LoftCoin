@@ -27,6 +27,7 @@
 
         <item name="bottomNavigationStyle">@style/AppTheme.BottomNavigationView</item>
         <item name="materialAlertDialogTheme">@style/AppTheme.AlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheet.Dialog</item>
 
 
         <item name="buttonWelcome">@style/Widget.AppTheme.Bottom.Welcome</item>
@@ -35,10 +36,13 @@
         <item name="walletCardHeight">160dp</item>
         <item name="textNegative">@color/watermelon</item>
         <item name="textPositive">@color/weird_green</item>
-
     </style>
 
     <style name="AppTheme.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/dark_four</item>
+    </style>
+
+    <style name="AppTheme.BottomSheet.Dialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="colorSurface">@color/dark_four</item>
     </style>
 

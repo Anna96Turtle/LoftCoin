@@ -18,10 +18,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-
 @Singleton
 class CurrencyRepoImpl implements CurrencyRepo {
 
@@ -35,8 +31,8 @@ class CurrencyRepoImpl implements CurrencyRepo {
     CurrencyRepoImpl(@NonNull Context context) {
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
         availableCurrencies.put("USD", Currency.create("$", "USD", context.getString(R.string.usd)));
-        availableCurrencies.put("EUR", Currency.create("€", "EUR", context.getString(R.string.eur)));
-        availableCurrencies.put("RUB", Currency.create("₽", "RUB", context.getString(R.string.rub)));
+        availableCurrencies.put("EUR", Currency.create("E", "EUR", context.getString(R.string.eur)));
+        availableCurrencies.put("RUB", Currency.create("R", "RUB", context.getString(R.string.rub)));
     }
 
     @NonNull
@@ -49,22 +45,32 @@ class CurrencyRepoImpl implements CurrencyRepo {
 
     @NonNull
     @Override
-    public Observable<Currency> currency() {
-        return Observable.create(emitter -> {
-            SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs, key) -> {
-                if (!emitter.isDisposed()) {
-                    emitter.onNext(availableCurrencies.get(prefs.getString(key, "USD")));
-                }
-            };
-            prefs.registerOnSharedPreferenceChangeListener(listener);
-            emitter.setCancellable(() -> prefs.unregisterOnSharedPreferenceChangeListener(listener));
-            emitter.onNext(availableCurrencies.get(prefs.getString(KEY_CURRENCY, "USD")));
-        });
+    public LiveData<Currency> currency() {
+        return new CurrencyLiveData();
     }
 
     @Override
     public void updateCurrency(@NonNull Currency currency) {
         prefs.edit().putString(KEY_CURRENCY, currency.code()).apply();
+    }
+
+    private class CurrencyLiveData extends LiveData<Currency> implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+        @Override
+        protected void onActive() {
+            prefs.registerOnSharedPreferenceChangeListener(this);
+            setValue(availableCurrencies.get(prefs.getString(KEY_CURRENCY, "USD")));
+        }
+
+        @Override
+        protected void onInactive() {
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+            setValue(availableCurrencies.get(prefs.getString(key, "USD")));
+        }
     }
 
 }

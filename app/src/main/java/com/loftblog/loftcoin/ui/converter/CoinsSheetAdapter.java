@@ -72,6 +72,7 @@ class CoinsSheetAdapter  extends ListAdapter<Coin, CoinsSheetAdapter.ViewHolder>
             super(binding.getRoot());
             this.binding = binding;
             OutlineCircle.apply(binding.logo);
+            //CircleViewOutlineProvider.apply(binding.itemCoinsSheetLogo);
         }
     }
 }

@@ -36,7 +36,6 @@ class NotifierImpl implements Notifier {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    @NonNull
     @Override
     public Completable sendMessage(@NonNull String title, @NonNull String message, @NonNull Class<?> receiver) {
         return Completable

@@ -1,14 +1,11 @@
 package com.loftblog.loftcoin.data;
 
-import androidx.annotation.NonNull;
-
 import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Wallet {
 
-    @NonNull
-    static Wallet create(String id, Coin coin, Double balance) {
+   public static Wallet create(String id, Coin coin, Double balance) {
         return new AutoValue_Wallet(id, coin, balance);
     }
 

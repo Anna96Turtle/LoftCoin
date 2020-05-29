@@ -89,7 +89,8 @@ class CmcCoinsRepo implements CoinsRepo {
                     coin.change24h(),
                     query.currency(),
                     coin.id()
-            ));
+                    )
+            );
         }
         return roomCoins;
     }

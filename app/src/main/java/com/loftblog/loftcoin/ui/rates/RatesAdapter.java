@@ -16,7 +16,7 @@ import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.data.Coin;
 import com.loftblog.loftcoin.databinding.LiRateBinding;
 import com.loftblog.loftcoin.util.ImageLoader;
-import com.loftblog.loftcoin.util.OutlineCircle;
+import com.loftblog.loftcoin.widget.OutlineCircle;
 import com.loftblog.loftcoin.util.PercentFormatter;
 import com.loftblog.loftcoin.util.PriceFormatter;
 
@@ -38,6 +38,10 @@ class RatesAdapter extends ListAdapter<Coin, RatesAdapter.ViewHolder> {
     private int colorNegative = Color.RED;
 
     private int colorPositive = Color.GREEN;
+
+    private int colorEvenLine = Color.DKGRAY;
+
+    private int colorOddLine = Color.GRAY;
 
     @Inject
     RatesAdapter(PriceFormatter priceFormatter, PercentFormatter percentFormatter, ImageLoader imageLoader) {
@@ -70,7 +74,7 @@ class RatesAdapter extends ListAdapter<Coin, RatesAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RatesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LiRateBinding.inflate(inflater, parent, false));
     }
 
@@ -85,6 +89,10 @@ class RatesAdapter extends ListAdapter<Coin, RatesAdapter.ViewHolder> {
         } else {
             holder.binding.change.setTextColor(colorNegative);
         }
+
+        if (position % 2 == 0) holder.binding.getRoot().setBackgroundColor(colorOddLine);
+        else holder.binding.getRoot().setBackgroundColor(colorEvenLine);
+
         imageLoader
                 .load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
                 .into(holder.binding.logo);
@@ -111,6 +119,10 @@ class RatesAdapter extends ListAdapter<Coin, RatesAdapter.ViewHolder> {
         colorNegative = v.data;
         context.getTheme().resolveAttribute(R.attr.textPositive, v, true);
         colorPositive = v.data;
+        context.getTheme().resolveAttribute(R.attr.evenLineBackground, v, true);
+        colorEvenLine = v.data;
+        context.getTheme().resolveAttribute(R.attr.oddLineBackground, v, true);
+        colorOddLine = v.data;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

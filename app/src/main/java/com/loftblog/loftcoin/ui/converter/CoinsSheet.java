@@ -28,7 +28,7 @@ public class CoinsSheet extends BottomSheetDialogFragment {
 
     static final int MODE_TO = 2;
 
-    private final CompositeDisposable disposable = new CompositeDisposable();
+    private  CompositeDisposable disposable = new CompositeDisposable();
 
     private final ConverterComponent component;
 

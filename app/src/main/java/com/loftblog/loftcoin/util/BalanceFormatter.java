@@ -21,11 +21,12 @@ public class BalanceFormatter implements Formatter<Wallet> {
     @NonNull
     @Override
     public String format(@NonNull Wallet value) {
+
         final DecimalFormat format = (DecimalFormat) NumberFormat.getCurrencyInstance();
         final DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
         symbols.setCurrencySymbol(value.coin().symbol());
         format.setDecimalFormatSymbols(symbols);
+
         return format.format(value.balance());
     }
-
 }

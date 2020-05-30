@@ -72,7 +72,7 @@ public class CoinsSheet extends BottomSheetDialogFragment {
 
         disposable.add(viewModel.topCoins().subscribe(adapter::submitList));
         disposable.add(RecyclerViews.onClick(binding.recycler)
-                .map((position) -> adapter.getItem(position))
+                .map(position -> adapter.getItem(position))
                 .subscribe(coin -> {
                     if (MODE_FROM == mode) {
                         viewModel.fromCoin(coin);

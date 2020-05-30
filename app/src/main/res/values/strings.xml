@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">LoftCoin</string>
+    <string name="add">Добавить</string>
+    <string name="choose_currency">Выбор валюты</string>
 
     <!-- Welcome -->
     <string name="welcome_page_1_title">Покупка и продажа </string>
@@ -25,12 +27,10 @@
     <string name="rub">Рубль</string>
 
     <!-- Rates Fragment -->
-    <string name="choose_currency">Выбор валюты</string>
     <string name="sort">Сортировать</string>
+    <string name="general_analysis">Общий анализ</string>
 
     <string name="default_channel_id" translatable="false">default_channel</string>
     <string name="default_channel_name">@string/app_name</string>
 
-    <!-- Wallets Fragment -->
-    <string name="add">Добавить</string>
 </resources>

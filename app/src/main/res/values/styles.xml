@@ -43,7 +43,19 @@
     </style>
 
     <style name="AppTheme.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
-        <item name="colorSurface">@color/dark_four</item>
+        <item name="android:background">@color/dark_four</item>
+    </style>
+
+    <style name="AppTheme.BottomSheetDialog" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@color/dark_four</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@color/dark_four</item>
     </style>
 
     <style name="AppTheme.BottomSheet.Dialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">

@@ -17,6 +17,7 @@ import com.jakewharton.rxbinding3.widget.RxTextView;
 import com.loftblog.loftcoin.BaseComponent;
 import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.databinding.FragmentConverterBinding;
+import com.loftblog.loftcoin.util.ImageLoader;
 
 import javax.inject.Inject;
 
@@ -31,13 +32,16 @@ public class ConverterFragment extends Fragment {
 
     private FragmentConverterBinding binding;
 
+    private final ImageLoader imageLoader;
+
     private ConverterViewModel viewModel;
 
     @Inject
-    public ConverterFragment(BaseComponent baseComponent) {
+    public ConverterFragment(BaseComponent baseComponent, ImageLoader imageLoader) {
         component = DaggerConverterComponent.builder()
                 .baseComponent(baseComponent)
                 .build();
+        this.imageLoader = imageLoader;
     }
 
     @Override

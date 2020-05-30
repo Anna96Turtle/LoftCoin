@@ -45,7 +45,7 @@ public class CurrencyAdapter extends ListAdapter<Currency, CurrencyAdapter.ViewH
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Currency currency = getItem(position);
-        holder.binding.name.setText(currency.name());
+        holder.binding.name.setText(String.format("%s | %s", currency.name(), currency.code()));
         holder.binding.symbol.setText(currency.symbol());
     }
 

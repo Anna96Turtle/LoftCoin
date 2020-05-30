@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,10 @@ import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.data.Transaction;
 import com.loftblog.loftcoin.databinding.LiTransactionBinding;
 import com.loftblog.loftcoin.util.PriceFormatter;
+import com.loftblog.loftcoin.util.TransactionFormatter;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -25,13 +29,15 @@ class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAdapter.V
 
     private final PriceFormatter priceFormatter;
 
+    private final TransactionFormatter transactionFormatter;
+
     private LayoutInflater inflater;
 
     private int colorPositive = Color.GREEN;
     private int colorNegative = Color.RED;
 
     @Inject
-    TransactionsAdapter(PriceFormatter priceFormatter) {
+    TransactionsAdapter(PriceFormatter priceFormatter, TransactionFormatter transactionFormatter) {
         super(new DiffUtil.ItemCallback<Transaction>() {
             @Override
             public boolean areItemsTheSame(@NonNull Transaction oldItem, @NonNull Transaction newItem) {
@@ -44,6 +50,7 @@ class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAdapter.V
             }
         });
         this.priceFormatter = priceFormatter;
+        this.transactionFormatter = transactionFormatter;
     }
 
     @NonNull
@@ -55,13 +62,21 @@ class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAdapter.V
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Transaction transaction = getItem(position);
-        holder.binding.amount1.setText(priceFormatter.format(transaction.amount()));
+        holder.binding.amount1.setText(transactionFormatter.format(transaction));
         final double fiatAmount = transaction.amount() * transaction.coin().price();
         holder.binding.amount2.setText(priceFormatter.format(transaction.coin().currencyCode(), fiatAmount));
-        holder.binding.timestamp.setText(DateFormat.getDateFormat(inflater.getContext()).format(transaction.createdAt()));
 
-        if (transaction.amount() > 0) holder.binding.amount2.setTextColor(colorPositive);
-        else holder.binding.amount2.setTextColor(colorNegative);
+        Format formatter = new SimpleDateFormat("dd MMM yyyy");
+        holder.binding.timestamp.setText(formatter.format(transaction.createdAt()).toUpperCase());
+
+        if (transaction.amount() > 0)  {
+            holder.binding.amount2.setTextColor(colorPositive);
+            holder.binding.itemTransactionAmountArrow.setImageDrawable(ResourcesCompat.getDrawable(inflater.getContext().getResources(), R.drawable.ic_arrow_drop_up_24dp, null));
+        }
+        else {
+            holder.binding.amount2.setTextColor(colorNegative);
+            holder.binding.itemTransactionAmountArrow.setImageDrawable(ResourcesCompat.getDrawable(inflater.getContext().getResources(), R.drawable.ic_arrow_drop_down_24dp, null));
+        }
     }
 
     @Override

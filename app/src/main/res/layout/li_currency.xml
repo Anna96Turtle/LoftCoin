@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     android:gravity="center_vertical"
-    android:minHeight="?attr/listPreferredItemHeightSmall"
+    android:minHeight="56dp"
     android:orientation="horizontal"
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
@@ -16,6 +16,7 @@
         android:id="@+id/symbol"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:background="@drawable/bg_currency_symbol"
         android:gravity="center"
         android:textAppearance="?attr/textAppearanceHeadline4"
         tools:text="$" />

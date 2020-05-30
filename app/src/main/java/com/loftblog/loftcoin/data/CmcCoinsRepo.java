@@ -36,9 +36,9 @@ class CmcCoinsRepo implements CoinsRepo {
         return Observable
                 .fromCallable(() -> query.forceUpdate() || db.coins().coinsCount() == 0)
                 .switchMap((f) -> f ? api.listings(query.currency()) : Observable.empty())
-                .map((listings) -> mapToRoomCoins(query, listings.data()))
+                .map((listings -> mapToRoomCoins(query, listings.data())))
                 .doOnNext((coins) -> db.coins().insert(coins))
-                .switchMap((coins) -> fetchFromDb(query))
+                .switchMap((coins ->  fetchFromDb(query)))
                 .switchIfEmpty(fetchFromDb(query))
                 .<List<Coin>>map(Collections::unmodifiableList)
                 .subscribeOn(schedulers.io());
@@ -66,8 +66,8 @@ class CmcCoinsRepo implements CoinsRepo {
     @Override
     public Observable<List<Coin>> topCoins(@NonNull Currency currency) {
         return listings(Query.builder().currency(currency.code()).forceUpdate(false).build())
-                .switchMap((coins) -> db.coins().fetchTop(3))
-                .<List<Coin>>map(Collections::unmodifiableList);
+                .switchMap((coins -> db.coins().fetchTop(3)))
+                .map(Collections::unmodifiableList);
     }
 
     private Observable<List<RoomCoin>> fetchFromDb(Query query) {

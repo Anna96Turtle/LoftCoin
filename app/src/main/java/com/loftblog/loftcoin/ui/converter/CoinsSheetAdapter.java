@@ -53,7 +53,7 @@ class CoinsSheetAdapter  extends ListAdapter<Coin, CoinsSheetAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Coin coin = getItem(position);
-        holder.binding.name.setText(coin.symbol() + " | " + coin.name());
+        holder.binding.name.setText(String.format("%s | %s", coin.name(), coin.symbol()));
         imageLoader
                 .load(BuildConfig.IMG_ENDPOINT + coin.id() + ".png")
                 .into(holder.binding.logo);

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.loftblog.loftcoin.BaseComponent;
-import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.databinding.DialogCurrencyBinding;
 import com.loftblog.loftcoin.widget.OnItemClick;
 
@@ -50,7 +49,6 @@ public class CurrencyDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         binding = DialogCurrencyBinding.inflate(getLayoutInflater());
         return new MaterialAlertDialogBuilder(requireActivity())
-                .setTitle(R.string.choose_currency)
                 .setView(binding.getRoot())
                 .create();
     }

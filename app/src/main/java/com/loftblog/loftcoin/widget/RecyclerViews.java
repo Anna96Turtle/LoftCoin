@@ -19,9 +19,9 @@ public class RecyclerViews {
                 @Override
                 public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                     if (RecyclerView.SCROLL_STATE_IDLE == newState) {
-                        final View snapView = helper.findSnapView(rv.getLayoutManager());
+                        final View snapView = helper.findSnapView(recyclerView.getLayoutManager());
                         if (snapView != null) {
-                            final RecyclerView.ViewHolder holder = rv.findContainingViewHolder(snapView);
+                            final RecyclerView.ViewHolder holder = recyclerView.findContainingViewHolder(snapView);
                             if (holder != null) {
                                 emitter.onNext(holder.getAdapterPosition());
                             }

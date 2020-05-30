@@ -19,8 +19,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 
 @Singleton
 class CurrencyRepoImpl implements CurrencyRepo {
@@ -66,5 +64,4 @@ class CurrencyRepoImpl implements CurrencyRepo {
     public void updateCurrency(@NonNull Currency currency) {
         prefs.edit().putString(KEY_CURRENCY, currency.code()).apply();
     }
-
 }

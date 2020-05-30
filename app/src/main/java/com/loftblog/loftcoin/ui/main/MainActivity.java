@@ -10,12 +10,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import javax.inject.Inject;
+
 import com.loftblog.loftcoin.BaseComponent;
 import com.loftblog.loftcoin.LoftApp;
 import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.databinding.ActivityMainBinding;
-
-import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportFragmentManager().setFragmentFactory(fragmentFactory);
+
         final ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.toolbar);
         setContentView(binding.getRoot());

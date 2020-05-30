@@ -1,5 +1,7 @@
 package com.loftblog.loftcoin.data;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.FieldValue;
@@ -36,6 +38,7 @@ class WalletsRepoImpl implements WalletsRepo {
         this.coinsRepo = coinsRepo;
     }
 
+    @SuppressLint("CheckResult")
     @NonNull
     @Override
     public Observable<List<Wallet>> wallets(@NonNull Currency currency) {

@@ -16,6 +16,9 @@
     <string name="rates">Курс</string>
     <string name="converter">Конвертер</string>
 
+    <!-- Converter Fragment -->
+    <string name="zero_of_coin">0.00</string>
+
     <!-- Currency Dialog -->
     <string name="usd">Доллар</string>
     <string name="eur">Евро</string>

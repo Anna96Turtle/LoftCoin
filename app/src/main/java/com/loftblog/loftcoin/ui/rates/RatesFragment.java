@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.loftblog.loftcoin.BaseComponent;
@@ -102,4 +103,30 @@ public class RatesFragment extends Fragment {
         super.onDestroyView();
     }
 
+    private RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            binding.recycler.scrollToPosition(0);
+        }
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
+            binding.recycler.scrollToPosition(0);
+        }
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            binding.recycler.scrollToPosition(0);
+        }
+    };
 }

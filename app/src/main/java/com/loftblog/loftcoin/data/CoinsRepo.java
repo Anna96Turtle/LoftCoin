@@ -41,6 +41,7 @@ public interface CoinsRepo {
 
         @AutoValue.Builder
         public abstract static class Builder {
+
             public abstract Builder currency(String currency);
 
             public abstract Builder forceUpdate(boolean forceUpdate);
@@ -49,6 +50,7 @@ public interface CoinsRepo {
 
             public abstract Query build();
         }
+
     }
 
 }

@@ -7,6 +7,8 @@
     <attr name="walletCardHeight" format="dimension|reference" />
     <attr name="textNegative" format="color|reference" />
     <attr name="textPositive" format="color|reference" />
+    <attr name="evenLineBackground" format="color|reference" />
+    <attr name="oddLineBackground" format="color|reference" />
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
@@ -36,6 +38,8 @@
         <item name="walletCardHeight">160dp</item>
         <item name="textNegative">@color/watermelon</item>
         <item name="textPositive">@color/weird_green</item>
+        <item name="evenLineBackground">@color/dark_two</item>
+        <item name="oddLineBackground">@color/dark_three</item>
     </style>
 
     <style name="AppTheme.AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">

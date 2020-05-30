@@ -1,6 +1,9 @@
 package com.loftblog.loftcoin.ui.wallets;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.text.format.DateFormat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.loftblog.loftcoin.R;
 import com.loftblog.loftcoin.data.Transaction;
 import com.loftblog.loftcoin.databinding.LiTransactionBinding;
 import com.loftblog.loftcoin.util.PriceFormatter;
@@ -22,6 +26,9 @@ class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAdapter.V
     private final PriceFormatter priceFormatter;
 
     private LayoutInflater inflater;
+
+    private int colorPositive = Color.GREEN;
+    private int colorNegative = Color.RED;
 
     @Inject
     TransactionsAdapter(PriceFormatter priceFormatter) {
@@ -52,12 +59,24 @@ class TransactionsAdapter extends ListAdapter<Transaction, TransactionsAdapter.V
         final double fiatAmount = transaction.amount() * transaction.coin().price();
         holder.binding.amount2.setText(priceFormatter.format(transaction.coin().currencyCode(), fiatAmount));
         holder.binding.timestamp.setText(DateFormat.getDateFormat(inflater.getContext()).format(transaction.createdAt()));
+
+        if (transaction.amount() > 0) holder.binding.amount2.setTextColor(colorPositive);
+        else holder.binding.amount2.setTextColor(colorNegative);
     }
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         inflater = LayoutInflater.from(recyclerView.getContext());
+
+        Context context = recyclerView.getContext();
+
+        TypedValue typedValue = new TypedValue();
+
+        context.getTheme().resolveAttribute(R.attr.textPositive, typedValue, true);
+        colorPositive = typedValue.data;
+        context.getTheme().resolveAttribute(R.attr.textNegative, typedValue, true);
+        colorNegative = typedValue.data;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

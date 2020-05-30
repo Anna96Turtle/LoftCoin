@@ -56,7 +56,6 @@ public class RatesViewModel extends ViewModel {
                 .switchMap((q) -> coinsRepo.listings(q)
                 .doOnError(error::onNext)
                 .retryWhen((e) -> onRetry)
-//                .onErrorReturnItem(Collections.emptyList())
             )
             .doOnEach((ntf) -> isRefreshing.onNext(false))
                 .replay(1)
